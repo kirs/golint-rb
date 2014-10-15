@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'golint/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "golint-rb"
+  spec.name          = "golint"
   spec.version       = Golint::VERSION
   spec.authors       = ["Kir Shatrov"]
   spec.email         = ["shatrov@me.com"]
