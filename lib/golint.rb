@@ -1,6 +1,7 @@
 require "golint/version"
 require "tempfile"
 require "base64"
+require 'open3'
 
 module Golint
   class Match < Struct.new(:line, :comment)
@@ -15,13 +16,24 @@ module Golint
       file.write(content)
       file.close
 
-      diff = `golint #{file.path}`
+      stdin, stdout, stderr, wait_thr = Open3.popen3('golint', file.path)
 
-      pattern = "#{file.path}:"
+      out = stdout.read
+      err = stderr.read
 
+      if err.size > 0
+        parse_matches(file.path, err)
+      elsif out.size > 0
+        parse_matches(file.path, out)
+      end
+    end
+
+    def parse_matches(path, body)
+      pattern = "#{path}:"
       matches = []
-      diff.each_line do |line|
+      body.each_line do |line|
         line = line.sub(pattern, "").sub("\n", "")
+
         res = line.match(REGEXP)
         matches << Match.new(res[1].to_i, res[3].strip)
       end

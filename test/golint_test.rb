@@ -1,9 +1,10 @@
 require 'test_helper'
 
 class TestGolint < MiniTest::Unit::TestCase
-  def test_shit
+  def test_server
     file = File.open('test/fixtures/server.go')
     results = Golint.lint(file.read)
+
     assert_equal results.size, 11
 
     assert_equal results[0].line, 30
@@ -28,5 +29,13 @@ class TestGolint < MiniTest::Unit::TestCase
     assert_equal results[9].comment, "don't use ALL_CAPS in Go names; use CamelCase"
     assert_equal results[10].line, 122
     assert_equal results[10].comment, "exported const ROUTE_PREFIX should have comment (or a comment on this block) or be unexported"
+  end
+
+  def test_one_line
+    results = Golint.lint('item_id := vars["item_id"]')
+
+    assert_equal results.size, 1
+    assert_equal results[0].line, 1
+    assert_equal results[0].comment, "expected 'package', found 'IDENT' item_id"
   end
 end
