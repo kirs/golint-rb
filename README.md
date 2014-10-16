@@ -1,6 +1,8 @@
 # Golint-rb
 
-TODO: Write a gem description
+[![Build Status](https://travis-ci.org/kirs/golint-rb.svg)](https://travis-ci.org/kirs/golint-rb)
+
+Lints your Go code with golint utility.
 
 ## Installation
 
