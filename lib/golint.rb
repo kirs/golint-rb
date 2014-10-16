@@ -23,7 +23,7 @@ module Golint
       diff.each_line do |line|
         line = line.sub(pattern, "").sub("\n", "")
         res = line.match(REGEXP)
-        matches << Match.new(res[1], res[3].strip)
+        matches << Match.new(res[1].to_i, res[3].strip)
       end
 
       matches
