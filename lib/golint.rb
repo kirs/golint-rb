@@ -25,6 +25,8 @@ module Golint
         parse_matches(file.path, err)
       elsif out.size > 0
         parse_matches(file.path, out)
+      else
+        []
       end
     end
 

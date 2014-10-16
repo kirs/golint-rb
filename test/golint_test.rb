@@ -38,4 +38,10 @@ class TestGolint < MiniTest::Unit::TestCase
     assert_equal results[0].line, 1
     assert_equal results[0].comment, "expected 'package', found 'IDENT' item_id"
   end
+
+  def test_valid
+    results = Golint.lint("package main\nvar fooBar string")
+
+    assert_equal results.size, 0
+  end
 end
